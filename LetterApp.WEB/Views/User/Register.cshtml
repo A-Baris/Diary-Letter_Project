@@ -1,0 +1,72 @@
+﻿@model LetterApp.WEB.Models.UserRegister
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var success = TempData["success"];
+
+    }
+   
+   
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <h4>Validation Errors:</h4>
+        <ul>
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}
+
+@if(success!=null)
+{
+    <div class="alert alert-success">
+        <h3>@success</h3>
+    </div>
+}
+
+
+
+<div class="container">
+    <div class="row justify-content-center" ">
+        <div class="col-md-8" style="margin-left:30px">
+            <h1>Register</h1>
+
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="Username">Username</label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PasswordConfirmed">Confirm Password</label>
+        <input asp-for="PasswordConfirmed" type="password" class="form-control" />
+        <span asp-validation-for="PasswordConfirmed" class="text-danger"></span>
+    </div>
+
+                <div class="form-group text-center" style="margin-top:15px">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+</form>
+        </div>
+    </div>
+</div>

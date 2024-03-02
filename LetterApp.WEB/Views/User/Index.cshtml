@@ -1,0 +1,79 @@
+﻿@model IEnumerable<LetterApp.WEB.Models.View_Models.UserVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var successMessage = TempData["success"];
+    var errorMessage = TempData["error"];
+}
+
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        <h2>@successMessage</h2>
+    </div>
+}
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        <h2>@errorMessage</h2>
+    </div>
+}
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PasswordConfirmed)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PasswordConfirmed)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34526.213
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.Entity", "LetterApp.Entity\LetterApp.Entity.csproj", "{FE24921A-46F4-4C8B-AABE-093BA296787E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.Dal", "LetterApp.Dal\LetterApp.Dal.csproj", "{9784C88D-0601-4202-8CA5-0DF2056FF1E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.BLL", "LetterApp.BLL\LetterApp.BLL.csproj", "{26CCDFAB-6919-43E0-8315-B17B84310A0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.Api", "LetterApp.Api\LetterApp.Api.csproj", "{AEF8CB20-3783-443D-A737-A4760C470A57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.IOC", "LetterApp.IOC\LetterApp.IOC.csproj", "{709AC56C-8F1D-4EB1-B9DB-507C90EB351A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetterApp.Common", "LetterApp.Common\LetterApp.Common.csproj", "{DCD306DB-2273-49BD-A47B-1B5B24C425F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterApp.WEB", "LetterApp.WEB\LetterApp.WEB.csproj", "{5B26C1D8-4A4D-4D2E-9075-FF5544E7817F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE24921A-46F4-4C8B-AABE-093BA296787E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE24921A-46F4-4C8B-AABE-093BA296787E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE24921A-46F4-4C8B-AABE-093BA296787E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE24921A-46F4-4C8B-AABE-093BA296787E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9784C88D-0601-4202-8CA5-0DF2056FF1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9784C88D-0601-4202-8CA5-0DF2056FF1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9784C88D-0601-4202-8CA5-0DF2056FF1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9784C88D-0601-4202-8CA5-0DF2056FF1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26CCDFAB-6919-43E0-8315-B17B84310A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CCDFAB-6919-43E0-8315-B17B84310A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CCDFAB-6919-43E0-8315-B17B84310A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CCDFAB-6919-43E0-8315-B17B84310A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF8CB20-3783-443D-A737-A4760C470A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF8CB20-3783-443D-A737-A4760C470A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF8CB20-3783-443D-A737-A4760C470A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF8CB20-3783-443D-A737-A4760C470A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{709AC56C-8F1D-4EB1-B9DB-507C90EB351A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709AC56C-8F1D-4EB1-B9DB-507C90EB351A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709AC56C-8F1D-4EB1-B9DB-507C90EB351A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709AC56C-8F1D-4EB1-B9DB-507C90EB351A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD306DB-2273-49BD-A47B-1B5B24C425F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD306DB-2273-49BD-A47B-1B5B24C425F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD306DB-2273-49BD-A47B-1B5B24C425F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD306DB-2273-49BD-A47B-1B5B24C425F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B26C1D8-4A4D-4D2E-9075-FF5544E7817F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B26C1D8-4A4D-4D2E-9075-FF5544E7817F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B26C1D8-4A4D-4D2E-9075-FF5544E7817F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B26C1D8-4A4D-4D2E-9075-FF5544E7817F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1B123F3-0126-49EF-8AEB-D7707CA158D0}
+	EndGlobalSection
+EndGlobal

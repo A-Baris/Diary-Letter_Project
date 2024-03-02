@@ -1,0 +1,14 @@
+﻿@model List<LetterApp.WEB.Models.NewsItem>
+
+<h1>Latest News</h1>
+
+@foreach (var item in Model)
+{
+    <div>
+        <h2>@item.Name</h2>
+        <p>@item.Description</p>
+        <img src="@item.Image" alt="Image" />
+        <p>Source: @item.Source</p>
+        <a href="@item.Url">Read More</a>
+    </div>
+}

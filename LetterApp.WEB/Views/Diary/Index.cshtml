@@ -1,0 +1,48 @@
+﻿@model List<LetterApp.WEB.Models.View_Models.DiaryVM.DiaryVM>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container" >
+    <div class="row">
+        <div class="col-md-3">
+
+            <h1>asdasd</h1>
+            <h2>asdasda</h2>
+
+        </div>
+        <div class="col-md-9">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a style="text-decoration: none;" href="">
+                                        @item.Header
+                                    </a>
+                                </h5>
+                                <p class="card-text">@item.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="/diary/details/@item.Id" type="button" class="btn btn-success" style="margin-right:5px">Details</a> 
+                        <button type="button" class="btn btn-primary" style="margin-right:5px">Edit</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+
