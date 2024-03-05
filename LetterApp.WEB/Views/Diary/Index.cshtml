@@ -1,21 +1,27 @@
 ﻿@model List<LetterApp.WEB.Models.View_Models.DiaryVM.DiaryVM>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    var successMessage = TempData["success"];
 }
 
-<div class="container" >
-    <div class="row">
-        <div class="col-md-3">
+<div class="alert-info">
+  
+        @if (successMessage != null)
+        {
+        <h4>@successMessage</h4>
+        }
+   
+</div>
 
-            <h1>asdasd</h1>
-            <h2>asdasda</h2>
+   
+@if (Model.Count>0){
+    <div style="margin-bottom:5px">
+        <a class="btn btn-primary" asp-action="create" asp-controller="diary">New Diary</a>
 
-        </div>
-        <div class="col-md-9">
+    </div>
             @foreach (var item in Model)
             {
-                <div class="card mb-3">
+    <div class="card mb-3" style="border:solid;border-color:cornflowerblue">
                     <div class="row">
                         <div class="col-md-4">
                             <img src="" class="img-fluid" alt="">
@@ -24,23 +30,24 @@
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a style="text-decoration: none;" href="">
-                                        @item.Header
+                                        @item?.Header
                                     </a>
                                 </h5>
-                                <p class="card-text">@item.Description</p>
+                                <p class="card-text">@item?.Description</p>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <a href="/diary/details/@item.Id" type="button" class="btn btn-success" style="margin-right:5px">Details</a> 
-                        <button type="button" class="btn btn-primary" style="margin-right:5px">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+        <div class="d-flex justify-content-end" style="margin-right:5px;margin-bottom:5px">
+                        <a href="/diary/details/@item?.Id" type="button" class="btn btn-success" style="margin-right:5px">Details</a>
+                        <a href="/diary/edit/@item?.Id"  type="button" class="btn btn-primary" style="margin-right:5px">Edit</a>
+            <a href="/diary/delete/@item?.Id" type="button" onclick="return confirm('Bu günlük kaydını silmek istiyor musunuz?')" class="btn btn-danger" >Delete</a>
                     </div>
                 </div>
             }
-
-        </div>
-    </div>
+}
+<div>
+    <p>Görüntülenecek günlük bulunamadı.</p>
+    <p>Yenir bir günlük oluşturmak için</p>   <p><a class="btn btn-primary" asp-action="create" asp-controller="diary">New Diary</a> </p>
 </div>
 
 

@@ -1,15 +1,12 @@
-﻿namespace LetterApp.WEB.Models.View_Models
+﻿namespace LetterApp.WEB.Models.View_Models.User
 {
-    public class UserVM
+    public class UserCreateVM
     {
-        public int? Id { get; set; }
         public string? IdentityId { get; set; }
         public string? Username { get; set; }
 
         public string? Email { get; set; }
 
         public string? Password { get; set; }
-
-        public string? PasswordConfirmed { get; set; }
     }
 }

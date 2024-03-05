@@ -4,6 +4,7 @@ using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace LetterApp.BLL.Redis.Concretes
         {
             return await _database.HashDeleteAsync(_entityKey, id);
         }
+       
 
         public async Task<IEnumerable<T>> GetAllEntities()
         {
@@ -43,10 +45,12 @@ namespace LetterApp.BLL.Redis.Concretes
             }
             return null;
         }
+     
 
         public async Task<T> SetEntity(T entity)
         {
-            await _database.HashSetAsync(_entityKey, entity.Id.ToString(), JsonSerializer.Serialize(entity));
+          ;
+            await _database.HashSetAsync(_entityKey, entity.Id, JsonSerializer.Serialize(entity));
             return entity;
         }
 
@@ -57,5 +61,6 @@ namespace LetterApp.BLL.Redis.Concretes
             await SetEntity(newEntity);
             return newEntity;
         }
+       
     }
 }

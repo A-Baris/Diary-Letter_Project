@@ -17,5 +17,7 @@ namespace LetterApp.BLL.ConcreteWithRedisService
         public UserWithRedisService(IRedis_Cache<User> redis, IRepositoryLetterApp<User> repository) : base(redis, repository)
         {
         }
+
+       
     }
 }

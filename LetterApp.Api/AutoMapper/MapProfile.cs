@@ -2,6 +2,7 @@
 using LetterApp.Api.DTOs;
 using LetterApp.Api.DTOs.Diary;
 using LetterApp.Api.DTOs.DiaryNote;
+using LetterApp.Api.DTOs.User;
 using LetterApp.Entity.Entities;
 
 namespace LetterApp.Api.AutoMapper
@@ -11,6 +12,7 @@ namespace LetterApp.Api.AutoMapper
         public MapProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserCreateDTO>().ReverseMap();
 
             CreateMap<Diary, DiaryDTO>().ReverseMap();
             CreateMap<Diary, DiaryEditDTO>().ReverseMap();

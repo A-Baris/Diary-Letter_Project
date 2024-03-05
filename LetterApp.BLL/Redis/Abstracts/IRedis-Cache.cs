@@ -11,8 +11,11 @@ namespace LetterApp.BLL.Redis.Abstracts
     {
         Task<T> SetEntity(T entity);
         Task<T> GetEntityById(int id);
+
         Task<IEnumerable<T>> GetAllEntities();
         Task<bool> Delete(int id);
+
         Task<T> Update(int updatedId, T newEntity);
+ 
     }
 }

@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var success = TempData["success"];
 
-    }
-   
-   
+}
+
+
 @if (!ViewData.ModelState.IsValid)
 {
     <div class="alert alert-danger">
@@ -24,7 +24,7 @@
     </div>
 }
 
-@if(success!=null)
+@if (success != null)
 {
     <div class="alert alert-success">
         <h3>@success</h3>
@@ -33,10 +33,7 @@
 
 
 
-<div class="container">
-    <div class="row justify-content-center" ">
-        <div class="col-md-8" style="margin-left:30px">
-            <h1>Register</h1>
+<h1>Register</h1>
 
 <form asp-action="Register" method="post">
     <div class="form-group">
@@ -63,10 +60,7 @@
         <span asp-validation-for="PasswordConfirmed" class="text-danger"></span>
     </div>
 
-                <div class="form-group text-center" style="margin-top:15px">
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </div>
-</form>
-        </div>
+    <div class="form-group text-center" style="margin-top:15px">
+        <button type="submit" class="btn btn-primary">Register</button>
     </div>
-</div>
+</form>

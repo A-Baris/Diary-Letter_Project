@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LetterApp.Api.DTOs;
+using LetterApp.Api.DTOs.User;
 using LetterApp.Api.Validators;
 using LetterApp.BLL.AbsractService;
 using LetterApp.BLL.AbstractWithRedisServices;
@@ -44,21 +45,26 @@ namespace LetterApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
+          
             var user = await _userWithRedis.GetById(id);
             if (user == null) return NotFound("Id bulunamadı");
             return Ok(user);
+         
+        }
+        [HttpGet("identity/{id}")]
+        public async Task<IActionResult> GetUserByIdentity(string id)
+        {
+
+            var user = await _user.GetByIdentity(id);
+            if (user == null) return NotFound("Id bulunamadı");
+            return Ok(user);
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserDTO userDto)
+        public async Task<IActionResult> CreateUser(UserCreateDTO createDTO)
         {
-            ModelState.Clear();
-            var errors = _validation.GetValidationErrors(userDto);
-            if (errors.Any()) return BadRequest(ValidationHelper.HandleValidationErrors(errors));
-
-            userDto.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(userDto.Password,13);
-            userDto.PasswordConfirmed = BCrypt.Net.BCrypt.EnhancedHashPassword(userDto.PasswordConfirmed,13);
-            var newUser = _mapper.Map<User>(userDto);
+            var newUser = _mapper.Map<User>(createDTO);
             await _userWithRedis.Create(newUser);
             return Ok(newUser);
         }
@@ -72,7 +78,7 @@ namespace LetterApp.Api.Controllers
             userDto.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(userDto.Password, 13);
             userDto.PasswordConfirmed = BCrypt.Net.BCrypt.EnhancedHashPassword(userDto.PasswordConfirmed, 13);
             var updatedUser=_mapper.Map<User>(userDto);
-            await _userWithRedis.Update(updatedUser);
+            await _userWithRedis.Update(updatedUser,updatedUser.Id);
             return Ok(updatedUser);
         }
         [HttpDelete("delete/{id}")]

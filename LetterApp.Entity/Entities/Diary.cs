@@ -10,6 +10,7 @@ namespace LetterApp.Entity.Entities
 {
     public class Diary:BaseClass
     {
+   
         [MaxLength(100)]
         public string Header { get; set; }
         [MaxLength(500)]

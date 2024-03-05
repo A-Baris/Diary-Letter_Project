@@ -10,17 +10,19 @@
 <style>
     .fixed-button {
         position: fixed;
-        margin-top: 5px; /* Adjust as needed */
-        rgiht: 20px; /* Adjust as needed */
+        margin-top: 5px; /* Adjust as needed */    
         z-index: 999; /* Ensure it's above other content */
     }
 </style>
 
+<div style="margin-bottom:5px">
+    <a class="btn btn-success fixed-button" href="/diarynote/create/@diaryId" style="margin-bottom:5px">New Diary-Note</a>
+</div>
 
-<a  class="btn btn-success fixed-button" href="/diarynote/create/@diaryId" style="margin-bottom:5px">New Diary-Note</a>
+
     @foreach (var item in Model)
     {
-        <div class="card mb-3">
+        <div class="card mb-3" style="border:solid">
             <div class="row">
                 <div class="col-md-4">
                     <img src="" class="img-fluid" alt="">
@@ -38,13 +40,18 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end" style="margin-right:5px;margin-bottom:5px">
+            <a href="/diarynote/details/@item.DiaryNoteId" type="button" class="btn btn-primary" style="margin-right:5px">Detail</a>
+                <a href="/diarynote/edit/@item.DiaryNoteId" type="button" class="btn btn-secondary" style="margin-right:5px">Edit</a>
+            <a href="/diarynote/delete/@item.DiaryNoteId" type="button" class="btn btn-danger" onclick="return confirm('Bu günlük kaydını silmek istiyor musunuz?')">Delete</a>
+               
 
-                <button type="button" class="btn btn-primary" style="margin-right:5px">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+               
             </div>
         </div>
     }
+
+
 
 
 

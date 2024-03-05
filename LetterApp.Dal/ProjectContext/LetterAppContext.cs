@@ -40,7 +40,7 @@ namespace LetterApp.Dal.ProjectContext
             modelBuilder.Entity<User>()
                 .HasMany(x=>x.Diaries)
                 .WithOne(d=>d.User)
-                .HasForeignKey(u => u.UserId);
+                .HasForeignKey(d => d.UserId);
 
             modelBuilder.Entity<Diary>()
                 .HasMany(x=>x.DiaryNotes)

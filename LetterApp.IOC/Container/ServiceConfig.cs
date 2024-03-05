@@ -4,6 +4,7 @@ using LetterApp.BLL.AbstractRepository;
 using LetterApp.BLL.AbstractWithRedisServices;
 using LetterApp.BLL.ConcreteWithRedisService;
 using LetterApp.BLL.FluentValidationServices;
+using LetterApp.BLL.Redis.Abstracts;
 using LetterApp.BLL.Redis.Concretes;
 using LetterApp.BLL.Repository;
 using LetterApp.BLL.Services;
@@ -38,6 +39,7 @@ namespace LetterApp.IOC.Container
 
                 return new UserWithRedisService(redisCache, repository);
             });
+         
             services.AddScoped<IDiaryWithRedisService, DiaryWithRedisService>(sp =>
             {
                 var dbNo = RedisDatabase.Diaries;
@@ -45,14 +47,23 @@ namespace LetterApp.IOC.Container
                 var url = configuration["CacheOptions:Url"];
                 var redisCache = new Redis_Cache<Diary>(dbNo, entityKey, url);
                 var repository = sp.GetService<IRepositoryLetterApp<Diary>>();
+                //set service to use custom method between Diary  and DiaryNote
+                var redisNote = sp.GetService<IRedis_Cache<DiaryNote>>(); 
 
-                return new DiaryWithRedisService(redisCache, repository);
+                if (redisNote == null)
+                {
+                    var dbNoNote = RedisDatabase.Diaries;
+                    var entityKeyNote = RedisEntityKey.DiaryNoteKey;
+                    var urlNote = configuration["CacheOptions:Url"];
+                    redisNote = new Redis_Cache<DiaryNote>(dbNoNote, entityKeyNote, urlNote);
+                }
+                return new DiaryWithRedisService(redisCache, repository,redisNote);
             });
 
             services.AddScoped<IDiaryNoteWithRedisService, DiaryNoteWithRedisService>(sp =>
             {
 
-                var dbNo = RedisDatabase.DiaryNotes;
+                var dbNo = RedisDatabase.Diaries;
                 var entityKey = RedisEntityKey.DiaryNoteKey;
                 var url = configuration["CacheOptions:Url"];
                 var redisCache = new Redis_Cache<DiaryNote>(dbNo, entityKey, url);

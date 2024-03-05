@@ -14,7 +14,7 @@ namespace LetterApp.Entity.BaseEntity
         {
             Status = BaseStatus.Active;
         }
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public BaseStatus Status { get; set; }
         [MaxLength(255)]
         public string? Created_Ip  { get; set; }

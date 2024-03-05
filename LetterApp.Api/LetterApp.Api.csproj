@@ -24,4 +24,8 @@
     <ProjectReference Include="..\LetterApp.IOC\LetterApp.IOC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\User\" />
+  </ItemGroup>
+
 </Project>

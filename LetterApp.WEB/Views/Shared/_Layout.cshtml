@@ -11,8 +11,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LetterApp.WEB</a>
+            <div class="container-fluid" style="background-color: rgb(174, 214, 241);">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Diary World</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,9 +23,28 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="diary" asp-action="index">Diary</a>
                         </li>
                     </ul>
+                    <div>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div >
+                            <h3 style="color:white;">@User.Identity.Name</h3>
+                            </div>
+                            <div style="margin-left:10px">
+                            <a href="/home/logout">Çıkış</a>
+                            </div>
+                        
+                        }
+                        else
+                        {
+                            <a href="/home/Login">Login</a>
+                            <a href="/user/register">Register</a>
+                        }
+                    
+                    </div>
                 </div>
             </div>
         </nav>
@@ -33,17 +52,23 @@
     <div class="container" style="margin-left:10px">
         <main role="main" class="pb-3">
             <div class="container">
+            
                 <div class="row">
-                    <div class="col-md-2">
-                        <h1>Menu List</h1>
+                    <div class="col-md-2 d-flex flex-column" style="border: outset; height: 80vh;background-color: rgb(174, 214, 241);">
+                        <h1>Menu</h1>
                         <br />
-                        <h5>Link1</h5>
-                        <h5>Link2</h5>
-
+                        <h5><a href="/diary">Diaries</a></h5>
+                        <h5><a href="#">Profile</a></h5>
+                        <div class="flex-grow-1"></div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
 
                         @RenderBody()
+                    </div>
+                    <div class="col-md-2">
+
                     </div>
                 </div>
             </div>

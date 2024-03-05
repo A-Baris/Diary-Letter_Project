@@ -1,4 +1,5 @@
 ﻿using LetterApp.Entity.BaseEntity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,12 @@ namespace LetterApp.BLL.AbstractRepository
         Task<T> Create(T entity);
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(int id);
-        Task<T> Update(T entity);
+      
+        Task<T> Update(T entity,int id);
+      
         Task<bool> Delete(int id);
+    
+
+        
     }
 }

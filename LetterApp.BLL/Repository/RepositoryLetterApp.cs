@@ -55,6 +55,7 @@ namespace LetterApp.BLL.Repository
                 throw;
             }
         }
+     
 
         public async Task<IEnumerable<T>> GetAll()
         {
@@ -85,6 +86,7 @@ namespace LetterApp.BLL.Repository
                 throw;
             }
         }
+       
 
         public async Task<T> Update(T entity)
         {
@@ -93,7 +95,7 @@ namespace LetterApp.BLL.Repository
                
 
               
-                     entity.Status = Entity.Enums.BaseStatus.Updated;
+                   
                      _context.Set<T>().Entry(entity).State = EntityState.Modified;
                      _context.SaveChanges();
                     return entity;

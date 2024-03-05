@@ -10,5 +10,6 @@ namespace LetterApp.BLL.AbstractWithRedisServices
 {
     public interface IDiaryWithRedisService:IRepositoryLetterAppWithRedis<Diary>
     {
+        Task <bool> DeleteWithRelationEntity(int id);
     }
 }

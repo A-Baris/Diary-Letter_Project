@@ -10,6 +10,7 @@ namespace LetterApp.Entity.Entities
 {
     public class UserProfile:BaseClass
     {
+      
         [MaxLength(40)]
         public string Name { get; set; }
         [MaxLength(40)]

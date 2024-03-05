@@ -21,6 +21,7 @@ namespace LetterApp.WEB.Controllers
             _httpClientFactory = httpClientFactory;
             _client = _httpClientFactory.CreateClient();
         }
+
         public async Task<IActionResult> Index()
         {
             var apiUrl = "https://localhost:7223/api/diary";
@@ -43,7 +44,7 @@ namespace LetterApp.WEB.Controllers
                 var data = JsonConvert.DeserializeObject<DiaryNoteDetailVM>(jsonString);
                 return View(data);
             }
-            return RedirectToAction("/diary");
+            return RedirectToAction("index","diary");
         }
         [HttpGet]
         public IActionResult Create(int id)
@@ -57,7 +58,7 @@ namespace LetterApp.WEB.Controllers
         {
             try
             {
-                var apiUrl = "https://localhost:7223/api/diarynote/create";
+            var apiUrl = "https://localhost:7223/api/diarynote/create";
             var json = JsonConvert.SerializeObject(noteCreateVm);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync(apiUrl, content);
@@ -65,7 +66,7 @@ namespace LetterApp.WEB.Controllers
             {
                 string data = await response.Content.ReadAsStringAsync();
                 var apiData = JsonConvert.DeserializeObject<DiaryNoteCreateVM>(data);
-                TempData["success"] = "Kayıt başarılı şekilde gerçekleşti.";
+             
                 ViewBag.Id = apiData.DiaryId;
                     return RedirectToAction("Details", "Diary", new { id = apiData.DiaryId });
                 }
@@ -166,7 +167,18 @@ namespace LetterApp.WEB.Controllers
                 return View("edit");
             }
 
-        T}
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var apiUrl = $"https://localhost:7223/api/diarynote/delete/{id}";
+            var response = await _client.DeleteAsync(apiUrl);
+            if(response.IsSuccessStatusCode)
+            {
+              return RedirectToAction("Index", "Diary");
+            }
+            return View();
+        }
 
     }
 }

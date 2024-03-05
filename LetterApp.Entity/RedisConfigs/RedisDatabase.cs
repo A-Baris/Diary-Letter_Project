@@ -10,7 +10,7 @@ namespace LetterApp.Entity.RedisConfigs
     {
         public const int Users = 1;
         public const int Diaries =2;
-        public const int DiaryNotes =3;
+ 
 
     }
 }

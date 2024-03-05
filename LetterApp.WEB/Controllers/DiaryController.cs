@@ -1,15 +1,18 @@
 ﻿using LetterApp.WEB.Models;
 using LetterApp.WEB.Models.View_Models;
 using LetterApp.WEB.Models.View_Models.DiaryVM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 namespace LetterApp.WEB.Controllers
 {
+
     public class DiaryController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -22,19 +25,29 @@ namespace LetterApp.WEB.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var apiUrl = "https://localhost:7223/api/diary";
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var apiUrl = $"https://localhost:7223/api/user/identity/{userId}";
             var response = await _httpClient.GetAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<List<DiaryVM>>(jsonString);
-                return View(data);
+                var data = JsonConvert.DeserializeObject<UserVM>(jsonString);
+                var apiUrl2 = $"https://localhost:7223/api/diary/page/{data.Id}";
+                var response2 = await _httpClient.GetAsync(apiUrl2);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString2 = await response2.Content.ReadAsStringAsync();
+                    var data2 = JsonConvert.DeserializeObject<List<DiaryVM>>(jsonString2);
+                    return View(data2);
+                }
+
             }
+           
             return View();
         }
         public async Task<IActionResult> Details(int id)
         {
-            var apiUrl = $"https://localhost:7223/api/diary/{id}";
+            var apiUrl = $"https://localhost:7223/api/diary/detail/{id}";
             var response = await _httpClient.GetAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {
@@ -48,8 +61,19 @@ namespace LetterApp.WEB.Controllers
             return View(null);
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; 
+            var apiUrl = $"https://localhost:7223/api/user/identity/{userId}";
+            var response = await _httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<UserVM>(jsonString);
+                ViewBag.UserId = data.Id;
+               
+            }
+          
             return View();
         }
         [HttpPost]
@@ -66,8 +90,8 @@ namespace LetterApp.WEB.Controllers
                 {
                     string data = await response.Content.ReadAsStringAsync();
                     var apiData = JsonConvert.DeserializeObject<DiaryCreateVM>(data);
-                    TempData["success"] = "Kayıt başarılı şekilde gerçekleşti.";
-                    return RedirectToAction("Create");
+                    TempData["success"] = "Günlük başarılı şekilde oluşturuldu.";
+                    return RedirectToAction("index");
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -101,13 +125,24 @@ namespace LetterApp.WEB.Controllers
                 return View("create");
             }
         }
-
-        public IActionResult Edit()
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var apiUrl = $"https://localhost:7223/api/diary/{id}";
+            var response = await _httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<DiaryEditVM>(jsonString);
+
+                return View(data);
+
+
+            }
+            return View("index");
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Edit(DiaryEditVM diaryEditVM)
         {
             try
@@ -122,7 +157,7 @@ namespace LetterApp.WEB.Controllers
                     string data = await response.Content.ReadAsStringAsync();
                     var apiData = JsonConvert.DeserializeObject<DiaryVM>(data);
                     TempData["success"] = "Güncelleme başarılı şekilde gerçekleşti.";
-                    return RedirectToAction("edit",apiData);
+                    return RedirectToAction("index");
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -156,7 +191,7 @@ namespace LetterApp.WEB.Controllers
                 return View("edit");
             }
         }
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var apiUrld = $"https://localhost:7223/api/diary/delete/{id}";
@@ -165,6 +200,7 @@ namespace LetterApp.WEB.Controllers
             {
                 return View(response);
             }
+            
             return View(response);
         }
 

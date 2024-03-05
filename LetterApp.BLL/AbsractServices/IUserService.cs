@@ -10,5 +10,6 @@ namespace LetterApp.BLL.AbsractService
 {
     public interface IUserService:IRepositoryLetterApp<User>
     {
+        Task<User> GetByIdentity(string identityId);
     }
 }

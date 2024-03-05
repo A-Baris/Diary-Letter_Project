@@ -34,6 +34,7 @@ namespace LetterApp.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            
             var diaryNotes = await _diaryNoteWithRedis.GetAll();
             var test = diaryNotes.Where(x => x.Id == 2).ToList();
        
@@ -70,11 +71,11 @@ namespace LetterApp.Api.Controllers
                 return BadRequest(ValidationHelper.HandleValidationErrors(errors));
             }
             var updateDiaryNote = _mapper.Map<DiaryNote>(noteEditDTO);
-            var result = await _diaryNoteWithRedis.Update(updateDiaryNote);
+            var result = await _diaryNoteWithRedis.Update(updateDiaryNote, updateDiaryNote.Id);
             return result !=null ? Ok(result) : BadRequest(true);
 
         }
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _diaryNoteWithRedis.Delete(id);

@@ -1,6 +1,9 @@
 ﻿
+using LetterApp.WEB.IdentityContext.IdentityEntities;
 using LetterApp.WEB.Models;
 using LetterApp.WEB.Models.View_Models;
+using LetterApp.WEB.Models.View_Models.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,11 +16,13 @@ namespace LetterApp.WEB.Controllers
     public class UserController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly UserManager<AppUser> _userManager;
         private readonly HttpClient _httpClient;
 
-        public UserController(IHttpClientFactory httpClientFactory)
+        public UserController(IHttpClientFactory httpClientFactory,UserManager<AppUser> userManager)
         {
             _httpClientFactory = httpClientFactory;
+           _userManager = userManager;
             _httpClient = _httpClientFactory.CreateClient();
         }
         [HttpGet]
@@ -82,19 +87,86 @@ namespace LetterApp.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserRegister userRegister)
         {
+
+            if (ModelState.IsValid)
+            {
+                var newUser = new AppUser
+                {
+                    UserName = userRegister.Username,
+                    Email = userRegister.Email,
+
+                };
+                var result = await _userManager.CreateAsync(newUser, userRegister.Password);
+                if (result.Succeeded)
+                {
+                    var user = new UserCreateVM { IdentityId=newUser.Id, Username= newUser.UserName, Email=newUser.Email,Password=newUser.PasswordHash };
+                    try
+                    {
+
+
+                        string apiUrl = "https://localhost:7223/api/user";
+
+
+                        string json = JsonConvert.SerializeObject(user);
+                        HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage response = await _httpClient.PostAsync(apiUrl, content);
+
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string data = await response.Content.ReadAsStringAsync();
+                            var apiData = JsonConvert.DeserializeObject<UserCreateVM>(data);
+                            TempData["success"] = "Kayıt başarılı şekilde gerçekleşti.";
+                            return RedirectToAction("Register");
+                        }
+                        else if (response.StatusCode == HttpStatusCode.BadRequest)
+                        {
+
+                            string errorContent = await response.Content.ReadAsStringAsync();
+                            var apiErrorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(errorContent);
+
+
+                            foreach (var error in apiErrorResponse.Errors)
+                            {
+                                foreach (var errorMessage in error.Value)
+                                {
+
+                                    ModelState.AddModelError(error.Key, errorMessage);
+                                }
+                            }
+
+
+                            return View(userRegister);
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Failed to register. Please try again later.";
+                            return View("Register");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                        return View("Register");
+                    }
+                }
+            }
+
+
             try
             {
-               
+
 
                 string apiUrl = "https://localhost:7223/api/user";
 
-               
+
                 string json = JsonConvert.SerializeObject(userRegister);
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync(apiUrl, content);
 
-              
+
                 if (response.IsSuccessStatusCode)
                 {
                     string data = await response.Content.ReadAsStringAsync();
@@ -104,21 +176,21 @@ namespace LetterApp.WEB.Controllers
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                  
+
                     string errorContent = await response.Content.ReadAsStringAsync();
                     var apiErrorResponse = JsonConvert.DeserializeObject<ApiErrorResponse>(errorContent);
-                    
-                
+
+
                     foreach (var error in apiErrorResponse.Errors)
                     {
                         foreach (var errorMessage in error.Value)
                         {
-                          
+
                             ModelState.AddModelError(error.Key, errorMessage);
                         }
                     }
 
-                
+
                     return View(userRegister);
                 }
                 else
@@ -134,7 +206,7 @@ namespace LetterApp.WEB.Controllers
             }
         }
         [HttpGet]
-        public async  Task<IActionResult> Edit(int id)
+        public async  Task<IActionResult> Edit(string id)
         {
 
             try
@@ -159,11 +231,19 @@ namespace LetterApp.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserUpdate userUpdate)
         {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(userUpdate.UserId);
+                if (user == null) return View();
+                user.UserName = userUpdate.Username;
+                    user.Email=userUpdate.Email;
+              
+            }
             try
             {
               
 
-                string apiUrl = $"https://localhost:7223/api/user/update/{userUpdate}";
+                string apiUrl = $"https://localhost:7223/api/user/update";
 
 
                 string json = JsonConvert.SerializeObject(userUpdate);

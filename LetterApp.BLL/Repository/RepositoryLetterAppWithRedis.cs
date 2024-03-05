@@ -4,6 +4,7 @@ using LetterApp.Entity.BaseEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,7 @@ namespace LetterApp.BLL.Repository
                 throw new Exception("An error occurred during deleting the entity.", ex);
             }
         }
-
+     
         public Task<IEnumerable<T>> GetAll()
         {
             try
@@ -86,18 +87,21 @@ namespace LetterApp.BLL.Repository
                 throw new Exception("An error occurred during Get the entity.", ex);
             }
         }
+     
 
-        public async Task<T> Update(T entity)
+        public async Task<T> Update(T entity,int Id)
         {
             try
             {
-              
+             
+
                 var result = await _repository.Update(entity);
                 if (result == null)
                 {
                     return null;
                 }
-                await _redis.Update(entity.Id, entity);
+
+                await _redis.Update(Id, entity);
                 return entity;
             }
             catch (Exception ex)
@@ -107,5 +111,6 @@ namespace LetterApp.BLL.Repository
                 throw new Exception("An error occurred during updating the entity.", ex);
             }
         }
+       
     }
 }

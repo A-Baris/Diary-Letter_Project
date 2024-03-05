@@ -9,9 +9,8 @@ namespace LetterApp.Entity.Enums
     public enum BaseStatus
     {
         Passive = 0,
-        Active =1,
-        Updated=2,
-        Deleted =3,
+        Active =1
+    
     
     }
 }
